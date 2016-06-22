@@ -26,6 +26,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
 		if (health <= 0) {
 			Destroy (gameObject);
-		}
+			GameController controller = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+			controller.KilledEnemy();		}
 	}
 }
