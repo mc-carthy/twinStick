@@ -1,17 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerBehaviour : MonoBehaviour {
 
 	public float playerSpeed = 4.0f;
+	public Transform laser;
+	// How far from the centre of the ship the laser will be
+	public float laserDistance = 0.2f;
+	// Time (in seconds) between shots fired
+	public float timeBetweenFires = 0.3f;
+	// The buttons we can use to fire shots
+	public List<KeyCode> shootButton;
 
 	private float currentSpeed = 0.0f;
+	private float timeToNextFire = 0.0f;
 
 	private Vector3 lastMovement = new Vector3();
 
 	void Update() {
 		Rotate();
 		Movement();
+
+		foreach (KeyCode button in shootButton) {
+			if (Input.GetKey (button) && timeToNextFire < 0) {
+				timeToNextFire = timeBetweenFires;
+				ShootLaser ();
+				break;
+			}
+		}
+		timeToNextFire -= Time.deltaTime;
 	}
 
 	// Rotate the transform to face the cursor
@@ -55,5 +73,19 @@ public class PlayerBehaviour : MonoBehaviour {
 			// Slow down over time
 			currentSpeed *= 0.9f;
 		}
+	}
+
+	// Create a laser and position it in front of the ship
+	void ShootLaser() {
+		// Get the ships position
+		Vector3 laserPos = this.transform.position;
+		// The angle the laser will move away from the center
+		float rotationAngle = transform.localEulerAngles.z - 90;
+		// Calculate the point in front of the ship at a distance of laserDistance
+		laserPos.x += (Mathf.Cos ((rotationAngle) * Mathf.Deg2Rad) * -laserDistance);
+		laserPos.y += (Mathf.Sin ((rotationAngle) * Mathf.Deg2Rad) * -laserDistance);
+
+		// Create the laser at the given point
+		Instantiate(laser, laserPos, this.transform.rotation);
 	}
 }
