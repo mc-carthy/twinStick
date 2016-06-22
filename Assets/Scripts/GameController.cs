@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameController : MonoBehaviour {
@@ -13,6 +14,12 @@ public class GameController : MonoBehaviour {
 	public int enemiesPerWave = 10;
 	private int currentNumberOfEnemies = 0;
 
+	[Header("User Interface")]
+	private int score;
+	private int waveNumber;
+	public Text scoreText;
+	public Text waveText;
+
 	// Use this for initialization
 	void Start () {
 		StartCoroutine (SpawnEnemies ());
@@ -23,8 +30,14 @@ public class GameController : MonoBehaviour {
 	
 	}
 
+	public void IncreaseScore(int increase) {
+		score += increase;
+		scoreText.text = "Score: " + score;
+	}
+
 	public void KilledEnemy() {
 		currentNumberOfEnemies--;
+		IncreaseScore (10);
 	}
 
 	// Coroutine to spawn enemies
@@ -36,6 +49,8 @@ public class GameController : MonoBehaviour {
 		while (true) {
 			// Wait until all enemies are dead before spawning more
 			if (currentNumberOfEnemies <= 0) {
+				waveNumber++;
+				waveText.text = "Wave: " + waveNumber;
 				// Spawn the wave's enemies at random positions
 				for (int i = 0; i < enemiesPerWave; i++) {
 					// Ensure the enemies are spawned off-screen
