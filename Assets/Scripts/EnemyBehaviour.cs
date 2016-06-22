@@ -4,6 +4,7 @@ using System.Collections;
 public class EnemyBehaviour : MonoBehaviour {
 
 	public int health = 2;
+	public Transform explosion;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +28,12 @@ public class EnemyBehaviour : MonoBehaviour {
 		if (health <= 0) {
 			Destroy (gameObject);
 			GameController controller = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-			controller.KilledEnemy();		}
+			controller.KilledEnemy ();
+			if(explosion)
+			{
+				GameObject exploder = ((Transform)Instantiate(explosion, this.transform.position, this.transform.rotation)).gameObject;
+				Destroy(exploder, 2.0f);
+			}
+		}
 	}
 }
