@@ -12,11 +12,17 @@ public class PlayerBehaviour : MonoBehaviour {
 	public float timeBetweenFires = 0.3f;
 	// The buttons we can use to fire shots
 	public List<KeyCode> shootButton;
+	public AudioClip shootSound;
+
 
 	private float currentSpeed = 0.0f;
 	private float timeToNextFire = 0.0f;
-
 	private Vector3 lastMovement = new Vector3();
+	private AudioSource audioSource;
+
+	void Start() {
+		audioSource = GetComponent<AudioSource> ();
+	}
 
 	void Update() {
 		Rotate();
@@ -87,5 +93,6 @@ public class PlayerBehaviour : MonoBehaviour {
 
 		// Create the laser at the given point
 		Instantiate(laser, laserPos, this.transform.rotation);
+		audioSource.PlayOneShot (shootSound);
 	}
 }

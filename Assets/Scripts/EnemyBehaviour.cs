@@ -5,10 +5,12 @@ public class EnemyBehaviour : MonoBehaviour {
 
 	public int health = 2;
 	public Transform explosion;
+	public AudioClip hitSound;
+	AudioSource audioSource;
 
 	// Use this for initialization
 	void Start () {
-	
+		audioSource = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -23,6 +25,7 @@ public class EnemyBehaviour : MonoBehaviour {
 			LaserBehaviour laser = collision.gameObject.GetComponent<LaserBehaviour> ();
 			health -= laser.damage;
 			Destroy (collision.gameObject);
+			audioSource.PlayOneShot (hitSound);
 		}
 
 		if (health <= 0) {
