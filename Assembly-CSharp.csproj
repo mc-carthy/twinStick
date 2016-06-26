@@ -48,7 +48,9 @@
      <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\LaserBehaviour.cs" />
+     <Compile Include="Assets\Scripts\MenuBehaviour.cs" />
      <Compile Include="Assets\Scripts\MoveTowardsPlayer.cs" />
+     <Compile Include="Assets\Scripts\PauseMenuBehaviour.cs" />
      <Compile Include="Assets\Scripts\PlayerBehaviour.cs" />
      <None Include="Assets\Font\SIL Open Font License.txt" />
  <Reference Include="UnityEngine.UI">

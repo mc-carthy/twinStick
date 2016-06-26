@@ -25,17 +25,19 @@ public class PlayerBehaviour : MonoBehaviour {
 	}
 
 	void Update() {
-		Rotate();
-		Movement();
+		if (!PauseMenuBehaviour.isPaused) {
+			Rotate ();
+			Movement ();
 
-		foreach (KeyCode button in shootButton) {
-			if (Input.GetKey (button) && timeToNextFire < 0) {
-				timeToNextFire = timeBetweenFires;
-				ShootLaser ();
-				break;
+			foreach (KeyCode button in shootButton) {
+				if (Input.GetKey (button) && timeToNextFire < 0) {
+					timeToNextFire = timeBetweenFires;
+					ShootLaser ();
+					break;
+				}
 			}
+			timeToNextFire -= Time.deltaTime;
 		}
-		timeToNextFire -= Time.deltaTime;
 	}
 
 	// Rotate the transform to face the cursor
